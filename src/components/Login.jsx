@@ -1,6 +1,11 @@
 import React, { useState, useRef } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
+import { auth } from "../utils/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const Login = () => {
   const [isSignInform, setIsSignInForm] = useState(true);
@@ -12,16 +17,56 @@ const Login = () => {
   const name = useRef(null);
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInform);
+    setErrorMessage(null);
+    email.current.value = null;
+    password.current.value = null;
+    name.current.value = null;
   };
   const handleButtonClick = (e) => {
     e.preventDefault();
     // Validate the form data
     const errorMsg = isSignInform
       ? checkValidData(email.current.value, password.current.value, false)
-      : checkValidData(email.current.value, password.current.value, true, name.current.value);
-    console.log('Error Message', errorMsg);
-    
+      : checkValidData(
+          email.current.value,
+          password.current.value,
+          true,
+          name.current.value
+        );
+    console.log("Error Message", errorMsg);
+
     setErrorMessage(errorMsg);
+    if (!errorMsg) {
+      if (!isSignInform) {
+        createUserWithEmailAndPassword(
+          auth,
+          email.current.value,
+          password.current.value
+        )
+          .then((userCredential) => {
+            const user = userCredential.user;
+            console.log("User", user);
+          })
+          .catch((err) => {
+            const errCode = err.code;
+            setErrorMessage(`${errCode}: ${err.message}`);
+          });
+      } else {
+        signInWithEmailAndPassword(
+          auth,
+          email.current.value,
+          password.current.value
+        )
+          .then((userCredential) => {
+            const user = userCredential.user;
+            console.log("User", user);
+          })
+          .catch((err) => {
+            const errCode = err.code;
+            setErrorMessage(`${errCode}: ${err.message}`);
+          });
+      }
+    }
   };
   const actionText = isSignInform
     ? ["Sign In", "New to Netflix? Sign Up Now ?"]
@@ -33,10 +78,10 @@ const Login = () => {
       <div className="absolute">
         <img
           src="https://assets.nflxext.com/ffe/siteui/vlv3/9390f6f6-cf80-4bc9-8981-8c2cc8adf98a/web_tall_panel/IN-en-20250421-TRIFECTA-perspective_3c263b0f-a9eb-4dc8-99c0-e81c646bbe38_large.jpg"
-          srcset="https://assets.nflxext.com/ffe/siteui/vlv3/9390f6f6-cf80-4bc9-8981-8c2cc8adf98a/web_tall_panel/IN-en-20250421-TRIFECTA-perspective_3c263b0f-a9eb-4dc8-99c0-e81c646bbe38_large.jpg 2000w, https://assets.nflxext.com/ffe/siteui/vlv3/9390f6f6-cf80-4bc9-8981-8c2cc8adf98a/web_tall_panel/IN-en-20250421-TRIFECTA-perspective_3c263b0f-a9eb-4dc8-99c0-e81c646bbe38_medium.jpg 1279w, https://assets.nflxext.com/ffe/siteui/vlv3/9390f6f6-cf80-4bc9-8981-8c2cc8adf98a/web_tall_panel/IN-en-20250421-TRIFECTA-perspective_3c263b0f-a9eb-4dc8-99c0-e81c646bbe38_small.jpg 959w"
+          srcSet="https://assets.nflxext.com/ffe/siteui/vlv3/9390f6f6-cf80-4bc9-8981-8c2cc8adf98a/web_tall_panel/IN-en-20250421-TRIFECTA-perspective_3c263b0f-a9eb-4dc8-99c0-e81c646bbe38_large.jpg 2000w, https://assets.nflxext.com/ffe/siteui/vlv3/9390f6f6-cf80-4bc9-8981-8c2cc8adf98a/web_tall_panel/IN-en-20250421-TRIFECTA-perspective_3c263b0f-a9eb-4dc8-99c0-e81c646bbe38_medium.jpg 1279w, https://assets.nflxext.com/ffe/siteui/vlv3/9390f6f6-cf80-4bc9-8981-8c2cc8adf98a/web_tall_panel/IN-en-20250421-TRIFECTA-perspective_3c263b0f-a9eb-4dc8-99c0-e81c646bbe38_small.jpg 959w"
           alt="Netflix starter"
           aria-hidden="true"
-          class="default-ltr-cache-1e28eon"
+          className="default-ltr-cache-1e28eon"
         />
       </div>
       <form className="absolute p-12 bg-black/90 w-3/12 my-36 mx-auto right-0 left-0 text-white bg-opacity-50 rounded-xl">
