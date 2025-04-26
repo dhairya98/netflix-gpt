@@ -58,7 +58,6 @@ const Login = () => {
               .then(() => {
                 const {uid, email, displayName} = auth.currentUser
                 dispatch(addUser({uid: uid, email: email, displayName: displayName}));
-                navigate("/browse");
               })
               .catch((err) => {
                 console.log('Error Message', err);
@@ -78,7 +77,6 @@ const Login = () => {
           .then((userCredential) => {
             const user = userCredential.user;
             console.log("User", user);
-            navigate("/browse");
           })
           .catch((err) => {
             const errCode = err.code;
