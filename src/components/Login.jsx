@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BACKGROUND_URL } from "../utils/constants";
 
 const Login = () => {
   const [isSignInform, setIsSignInForm] = useState(true);
@@ -94,8 +95,7 @@ const Login = () => {
       <Header />
       <div className="absolute">
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/9390f6f6-cf80-4bc9-8981-8c2cc8adf98a/web_tall_panel/IN-en-20250421-TRIFECTA-perspective_3c263b0f-a9eb-4dc8-99c0-e81c646bbe38_large.jpg"
-          srcSet="https://assets.nflxext.com/ffe/siteui/vlv3/9390f6f6-cf80-4bc9-8981-8c2cc8adf98a/web_tall_panel/IN-en-20250421-TRIFECTA-perspective_3c263b0f-a9eb-4dc8-99c0-e81c646bbe38_large.jpg 2000w, https://assets.nflxext.com/ffe/siteui/vlv3/9390f6f6-cf80-4bc9-8981-8c2cc8adf98a/web_tall_panel/IN-en-20250421-TRIFECTA-perspective_3c263b0f-a9eb-4dc8-99c0-e81c646bbe38_medium.jpg 1279w, https://assets.nflxext.com/ffe/siteui/vlv3/9390f6f6-cf80-4bc9-8981-8c2cc8adf98a/web_tall_panel/IN-en-20250421-TRIFECTA-perspective_3c263b0f-a9eb-4dc8-99c0-e81c646bbe38_small.jpg 959w"
+          src={BACKGROUND_URL}
           alt="Netflix starter"
           aria-hidden="true"
           className="default-ltr-cache-1e28eon"

@@ -6,15 +6,25 @@ import { useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { LOGO, USER_ICON } from "../utils/constants";
+import { LOGO, SUPPORTED_LANGUAGES, USER_ICON } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  const showGptSearch = useSelector(store => store.gpt.showGptSearch)
   const handleSignOut = () => {
     signOut(auth).then(() => {});
   };
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearchView());
+  };
+  const handleLanguageChange = (e) => {
+    console.log('e', e.target.value);
+    dispatch(changeLanguage(e.target.value))
+  }
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -31,14 +41,18 @@ const Header = () => {
   }, []);
   return (
     <div className="absolute px-8 py-2 bg-gradient-to-b from-black w-full z-10 flex justify-between">
-      <img
-        src={LOGO}
-        alt="Netflix logo"
-        aria-hidden="true"
-        className="w-44"
-      />
+      <img src={LOGO} alt="Netflix logo" aria-hidden="true" className="w-44" />
       {user && (
-        <div className="flex items-center">
+        <div className="flex items-center p-2">
+          {showGptSearch && <select className="p-2 bg-gray-900 text-white m-2" onChange={handleLanguageChange}>
+            {SUPPORTED_LANGUAGES.map(lang=><option value={lang.identifier} key={lang.identifier}>{lang.name}</option>)}
+          </select>}
+          <button
+            className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg cursor-pointer"
+            onClick={handleGptSearchClick}
+          >
+            {showGptSearch ? "Back to Home" : "GPT Search"}
+          </button>
           <img
             src={USER_ICON}
             alt="User Icon"
