@@ -57,11 +57,13 @@ const Login = () => {
               displayName: name.current.value,
             })
               .then(() => {
-                const {uid, email, displayName} = auth.currentUser
-                dispatch(addUser({uid: uid, email: email, displayName: displayName}));
+                const { uid, email, displayName } = auth.currentUser;
+                dispatch(
+                  addUser({ uid: uid, email: email, displayName: displayName })
+                );
               })
               .catch((err) => {
-                console.log('Error Message', err);
+                console.log("Error Message", err);
                 setErrorMessage(err.message);
               });
           })
@@ -98,10 +100,10 @@ const Login = () => {
           src={BACKGROUND_URL}
           alt="Netflix starter"
           aria-hidden="true"
-          className="default-ltr-cache-1e28eon"
+          className="h-screen w-screen"
         />
       </div>
-      <form className="absolute p-12 bg-black/90 w-3/12 my-36 mx-auto right-0 left-0 text-white bg-opacity-50 rounded-xl">
+      <form className="absolute p-12 bg-black/90 w-3/12 my-36 mx-auto right-0 left-0 text-white rounded-xl">
         <h1 className="font-bold text-3xl py-4">{actionText[0]}</h1>
         {!isSignInform && (
           <input
