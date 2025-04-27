@@ -1,11 +1,11 @@
 import React from "react";
 import Header from "./Header";
-import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
+import useMovies from "../hooks/useNowPlayingMovies";
 
 const Browse = () => {
-  useNowPlayingMovies()
+  useMovies()
   return (
     <div>
       <Header />
