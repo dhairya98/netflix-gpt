@@ -100,10 +100,10 @@ const Login = () => {
           src={BACKGROUND_URL}
           alt="Netflix starter"
           aria-hidden="true"
-          className="h-screen w-screen"
+          className="h-screen w-screen object-cover"
         />
       </div>
-      <form className="absolute p-12 bg-black/90 w-3/12 my-36 mx-auto right-0 left-0 text-white rounded-xl">
+      <form className="absolute p-12 bg-black/90 sm:w-full md:w-3/12 my-36 mx-auto right-0 left-0 text-white rounded-xl">
         <h1 className="font-bold text-3xl py-4">{actionText[0]}</h1>
         {!isSignInform && (
           <input
