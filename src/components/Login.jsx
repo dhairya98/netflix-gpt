@@ -103,41 +103,53 @@ const Login = () => {
           className="h-screen w-screen object-cover"
         />
       </div>
-      <form className="absolute p-12 bg-black/90 sm:w-full md:w-3/12 my-36 mx-auto right-0 left-0 text-white rounded-xl">
-        <h1 className="font-bold text-3xl py-4">{actionText[0]}</h1>
-        {!isSignInform && (
+      <form className="absolute inset-0 flex items-center justify-center px-4">
+        <div className="bg-black bg-opacity-80 p-8 rounded-xl w-full max-w-md text-white space-y-6">
+          <h1 className="text-3xl font-bold text-center">{actionText[0]}</h1>
+
+          {!isSignInform && (
+            <input
+              type="text"
+              placeholder="Full Name"
+              className="p-3 w-full rounded bg-gray-700 placeholder-gray-300 focus:outline-none"
+              ref={name}
+            />
+          )}
+
           <input
-            type="text"
-            placeholder="Full Name"
-            className="p-4 my-4 w-full bg-gray-700"
-            ref={name}
+            type="email"
+            placeholder="Email Address"
+            className="p-3 w-full rounded bg-gray-700 placeholder-gray-300 focus:outline-none"
+            ref={email}
           />
-        )}
-        <input
-          type="text"
-          placeholder="Email Address"
-          className="p-4 my-4 w-full bg-gray-700"
-          ref={email}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="p-4 my-4 w-full bg-gray-700"
-          ref={password}
-        />
-        <p className="text-red-500 text-lg py-2">{errorMessage}</p>
-        <button
-          className="p-4 my-6 bg-red-700 w-full rounded-lg cursor-pointer"
-          onClick={handleButtonClick}
-        >
-          {actionText[0]}
-        </button>
-        <p
-          className="text-sm py-4 cursor-pointer hover:text-shadow-gray-100"
-          onClick={toggleSignInForm}
-        >
-          {actionText[1]}
-        </p>
+
+          <input
+            type="password"
+            placeholder="Password"
+            className="p-3 w-full rounded bg-gray-700 placeholder-gray-300 focus:outline-none"
+            ref={password}
+          />
+
+          {errorMessage && (
+            <p className="text-red-500 text-sm text-center">{errorMessage}</p>
+          )}
+
+          <button
+            className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded font-semibold"
+            onClick={handleButtonClick}
+          >
+            {actionText[0]}
+          </button>
+
+          <p
+            className="text-sm text-center cursor-pointer hover:underline"
+            onClick={toggleSignInForm}
+          >
+            {isSignInform
+              ? "New to Netflix? Sign Up Now"
+              : "Already registered? Sign In Now"}
+          </p>
+        </div>
       </form>
     </div>
   );
