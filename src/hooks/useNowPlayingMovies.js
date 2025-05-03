@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addNowPlayingMovies,
@@ -13,6 +13,8 @@ const useMovies = () => {
   const nowPlayingMovies = useSelector(
     (store) => store.movies.nowPlayingMovies
   );
+  const [loading, setLoading] = useState(true);
+
   const fetchAndDispatch = async (url, actionCreator) => {
     const data = await fetch(url, apiOptions);
     const json = await data.json();
@@ -21,24 +23,30 @@ const useMovies = () => {
 
   useEffect(() => {
     if (!nowPlayingMovies) {
-      fetchAndDispatch(
-        "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
-        addNowPlayingMovies
-      );
-      fetchAndDispatch(
-        "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
-        addPopularMovies
-      );
-      fetchAndDispatch(
-        "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
-        addUpcomingMovies
-      );
-      fetchAndDispatch(
-        "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
-        addTopRatedMovies
-      );
+      Promise.all([
+        fetchAndDispatch(
+          "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
+          addNowPlayingMovies
+        ),
+        fetchAndDispatch(
+          "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+          addPopularMovies
+        ),
+        fetchAndDispatch(
+          "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
+          addUpcomingMovies
+        ),
+        fetchAndDispatch(
+          "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+          addTopRatedMovies
+        ),
+      ]).then(() => setLoading(false));
+    } else {
+      setLoading(false);
     }
   }, []);
+
+  return loading;
 };
 
 export default useMovies;

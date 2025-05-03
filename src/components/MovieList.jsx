@@ -1,9 +1,8 @@
 import React from "react";
 import MovieCard from "./MovieCard";
+import ShimmeringCards from "./ShimmeringCards";
 
 const MovieList = ({ title, movies }) => {
-  console.log("Movies are", movies);
-
   return (
     <div className="px-6 ">
       <h1 className="text-lg md:text-3xl py-2 text-white font-bold">{title}</h1>

@@ -40,7 +40,6 @@ const Login = () => {
           true,
           name.current.value
         );
-    console.log("Error Message", errorMsg);
 
     setErrorMessage(errorMsg);
     if (!errorMsg) {
@@ -52,7 +51,6 @@ const Login = () => {
         )
           .then((userCredential) => {
             const user = userCredential.user;
-            console.log("User", user);
             updateProfile(user, {
               displayName: name.current.value,
             })
@@ -79,7 +77,6 @@ const Login = () => {
         )
           .then((userCredential) => {
             const user = userCredential.user;
-            console.log("User", user);
           })
           .catch((err) => {
             const errCode = err.code;

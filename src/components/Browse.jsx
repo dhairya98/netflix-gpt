@@ -5,15 +5,19 @@ import SecondaryContainer from "./SecondaryContainer";
 import useMovies from "../hooks/useNowPlayingMovies";
 import GptSearch from "./GptSearch";
 import { useSelector } from "react-redux";
+import ShimmerUI from "./ShimmerUI";
 
 const Browse = () => {
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
-  useMovies();
+  const loading = useMovies();
+
   return (
     <div>
       <Header />
       {showGptSearch ? (
         <GptSearch />
+      ) : loading ? (
+        <ShimmerUI />
       ) : (
         <>
           <MainContainer />
